@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FolderCrawling
 {
-    class BFS
+    class BFS : Form1
     {
         
     }
     
-    class DFS
+    class DFS : Form1
     {
 
     }

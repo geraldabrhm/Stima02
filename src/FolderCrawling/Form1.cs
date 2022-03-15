@@ -13,6 +13,10 @@ namespace FolderCrawling
 {
     public partial class Form1 : System.Windows.Forms.Form
     {
+        protected static string selectedDir = string.Empty;
+        protected static string[] dirs = new string[] {};
+        protected static string[] files = new string[] {};
+
         public Form1()
         {
             InitializeComponent();
@@ -51,8 +55,6 @@ namespace FolderCrawling
         private void button1_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog objPath = new FolderBrowserDialog();
-            string selectedDir = string.Empty;
-
             if (objPath.ShowDialog() == DialogResult.OK)
             {
                 selectedDir = objPath.SelectedPath;
@@ -60,9 +62,6 @@ namespace FolderCrawling
                 label5.Text = selectedDir;
                 label5.ForeColor = System.Drawing.Color.Green;
 
-                /* This is how to get file and subdirectory names of selectedDir */
-                //string[] dirs = Directory.GetDirectories(selectedDir, "*.", SearchOption.TopDirectoryOnly);
-                //string[] files = Directory.GetFiles(selectedDir);
                 /* Display the content */
                 //foreach (string dir in dirs)
                 //{
@@ -74,12 +73,25 @@ namespace FolderCrawling
                 //}
             } else
             {
-                MessageBox.Show("You haven't pick any folder yet");
-                label5.Text = "No File Chosen";
-                label5.ForeColor = System.Drawing.Color.Black;
+                if (selectedDir == "")
+                {
+                    MessageBox.Show("You haven't pick any folder yet");
+                    label5.Text = "No File Chosen";
+                    label5.ForeColor = System.Drawing.Color.Black;
+                } else
+                {
+                    MessageBox.Show("Your current selected dir the same as before: " + selectedDir);
+                    label5.Text = selectedDir;
+                    label5.ForeColor = System.Drawing.Color.Green;
+                }
+                    
             }
-
-
+            if(selectedDir != "")
+            {
+                dirs = Directory.GetDirectories(selectedDir, "*.", SearchOption.TopDirectoryOnly);
+                files = Directory.GetFiles(selectedDir);
+            }
+            
         }
 
         private void label5_Click(object sender, EventArgs e)
