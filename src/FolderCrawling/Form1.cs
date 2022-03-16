@@ -113,6 +113,11 @@ namespace FolderCrawling
             else if (checkBox1.Checked && radioButton2.Checked)
             {
                 // Do DFS and find all occurences
+                string[] path = DFS.searchAll(selectedDir, textBox1.Text);
+                for (int i = 0; i < path.Length; i++)
+                {
+                    MessageBox.Show(path[i]);
+                }
             }
             else if(!checkBox1.Checked && radioButton1.Checked)
             {
@@ -120,11 +125,12 @@ namespace FolderCrawling
             }
             else if(!checkBox1.Checked && radioButton2.Checked)
             {
-                // Do BFS and find the first occurence only
+                // Do DFS and find the first occurence only
+                //MessageBox.Show(DFS.searchOne(selectedDir,textBox1.Text));
             }
             else
             {
-                MessageBox.Show("Please choose any search algorithm option", "ErrorMessage");
+                //MessageBox.Show("Please choose any search algorithm option", "ErrorMessage");
             }
 
             /* Currently failed switch case, find out more soon */
