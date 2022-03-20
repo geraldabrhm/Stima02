@@ -18,32 +18,77 @@ namespace FolderCrawling
     {
         public static string[] searchAll(string selectedDir, string file)
         {
-            string[] path = {};
+            string[] paths = {};
             string[] dirs = Directory.GetDirectories(selectedDir, "*.", SearchOption.TopDirectoryOnly);
             string[] files = Directory.GetFiles(selectedDir);
             bool found = false;
-
             int i = 0;
+
+            Form1.graph.AddNode(selectedDir.Split('\\').Last()).Attr.FillColor = Color.Red;
             while (!found && i < files.Length)
             {
-                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), files[i].Split('\\').Last());
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), files[i].Split('\\').Last()).Attr.Color = Color.Red;
+                Form1.graph.FindNode(files[i].Split('\\').Last()).Attr.FillColor = Color.Red;
                 if (file == files[i].Split('\\').Last())
                 {
-                    List<string> ls = path.ToList();
+                    Form1.graph.FindNode(files[i].Split('\\').Last()).Attr.FillColor = Color.LightBlue;
+                    List<string> ls = paths.ToList();
                     ls.Add(selectedDir);
-                    path = ls.ToArray();
+                    paths = ls.ToArray();
                     found = true;
                 }
                 i++;
             }
-            
+
+            while (i < files.Length)
+            {
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), files[i].Split('\\').Last());
+                i++;
+            }
+
+
             for (i = 0; i < dirs.Length; i++)
             {
-                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), dirs[i].Split('\\').Last());
-                List<string> ls = path.ToList();
-                path = ls.Concat(searchAll(dirs[i],file).ToList()).ToArray();
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), dirs[i].Split('\\').Last()).Attr.Color = Color.Red;
+                Form1.graph.FindNode(dirs[i].Split('\\').Last()).Attr.FillColor = Color.Red;
+                List<string> ls = paths.ToList();
+                paths = ls.Concat(searchAll(dirs[i],file).ToList()).ToArray();
             }
-            return path;
+
+            foreach (var path in paths)
+            {
+                string[] splitPathResult = path.Split('\\');
+                for (i = 0; i < splitPathResult.Length; i++)
+                {
+                    Node node = Form1.graph.FindNode(splitPathResult[i]);
+                    if (node != null)
+                    {
+                        node.Attr.FillColor = Color.LightBlue;
+                        if (i == splitPathResult.Length - 1)
+                        {
+                            foreach (var edge in Form1.graph.Edges)
+                            {
+                                if (edge.Source == splitPathResult[i] && edge.Target == file)
+                                {
+                                    edge.Attr.Color = Color.LightBlue;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var edge in Form1.graph.Edges)
+                            {
+                                if (edge.Source == splitPathResult[i] && edge.Target == splitPathResult[i + 1])
+                                {
+                                    edge.Attr.Color = Color.LightBlue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return paths;
         }
 
         public static string searchOne(string selectedDir, string file)
@@ -54,21 +99,34 @@ namespace FolderCrawling
             bool found = false;
             int i = 0;
 
+            Form1.graph.AddNode(selectedDir.Split('\\').Last()).Attr.FillColor = Color.Red;
+
             while (!found && i < files.Length)
             {
-                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), files[i].Split('\\').Last());
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), files[i].Split('\\').Last()).Attr.Color = Color.Red;
+                Form1.graph.FindNode(files[i].Split('\\').Last()).Attr.FillColor = Color.Red;
+
                 if (file.Equals(files[i].Split('\\').Last()))
                 {
+                    Form1.graph.FindNode(files[i].Split('\\').Last()).Attr.FillColor = Color.LightBlue;
                     path = selectedDir;
                     found = true;
                 }
                 i++;
             }
 
+            while (i < files.Length) {
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), files[i].Split('\\').Last());
+                i++;
+            }
+
+
             i = 0;
             while (!found && i < dirs.Length)
             {
-                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), dirs[i].Split('\\').Last());
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), dirs[i].Split('\\').Last()).Attr.Color = Color.Red;
+                Form1.graph.FindNode(dirs[i].Split('\\').Last()).Attr.FillColor = Color.Red;
+
                 path = searchOne(dirs[i], file);
                 if (path != String.Empty)
                 {
@@ -76,15 +134,40 @@ namespace FolderCrawling
                 }
                 i++;
             }
+            while (i < dirs.Length)
+            {
+                Form1.graph.AddEdge(selectedDir.Split('\\').Last(), dirs[i].Split('\\').Last());
+                i++;
+            }
+
             string[] splitPathResult = path.Split('\\');
-            //foreach(string toDelete in splitPathResult)
-            //for(int j = 1; j < splitPathResult.Length; j++)
-            //{
-            //    MessageBox.Show(splitPathResult[j]);
-            //    // graph.FindNode("A").Attr.FillColor = Microsoft.Msagl.Drawing.Color.Magenta;
-            //    Form1.graph.FindNode(splitPathResult[j]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-            //}
-            Form1.graph.FindNode(selectedDir.Split('\\').Last()).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+            for (i = 0; i < splitPathResult.Length; i++) {
+                Node node = Form1.graph.FindNode(splitPathResult[i]);
+                if (node != null)
+                {
+                    node.Attr.FillColor = Color.LightBlue;
+                    if (i == splitPathResult.Length - 1)
+                    {
+                        foreach (var edge in Form1.graph.Edges)
+                        {
+                            if (edge.Source == splitPathResult[i] && edge.Target == file)
+                            {
+                                edge.Attr.Color = Color.LightBlue;
+                            }
+                        }
+                    } else
+                    {
+                        foreach (var edge in Form1.graph.Edges)
+                        {
+                            if (edge.Source == splitPathResult[i] && edge.Target == splitPathResult[i+1])
+                            {
+                                edge.Attr.Color = Color.LightBlue;
+                            }
+                        }
+                    }
+                }
+            }
+
             return path;
         }
     }
