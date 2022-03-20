@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Microsoft.Msagl.Drawing;
 
 namespace FolderCrawling
 {
@@ -16,7 +17,8 @@ namespace FolderCrawling
         protected static string selectedDir = string.Empty;
         protected static string[] dirs = new string[] {};
         protected static string[] files = new string[] {};
-
+        public static Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
+        public static Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
         public Form1()
         {
             InitializeComponent();
@@ -84,14 +86,13 @@ namespace FolderCrawling
                     label5.Text = selectedDir;
                     label5.ForeColor = System.Drawing.Color.Green;
                 }
-                    
+                 
             }
             if(selectedDir != "")
             {
                 dirs = Directory.GetDirectories(selectedDir, "*.", SearchOption.TopDirectoryOnly);
                 files = Directory.GetFiles(selectedDir);
             }
-            
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -106,6 +107,14 @@ namespace FolderCrawling
 
         private void button2_Click(object sender, EventArgs e)
         {
+            foreach(Edge edge in graph.Edges.ToArray())
+            {
+                graph.RemoveEdge(edge);
+            }
+            foreach (Node node in graph.Nodes.ToArray())
+            {
+                graph.RemoveNode(node);
+            }
             if (checkBox1.Checked && radioButton1.Checked)
             {
                 // Do BFS and find all occurences
@@ -126,11 +135,12 @@ namespace FolderCrawling
             else if(!checkBox1.Checked && radioButton2.Checked)
             {
                 // Do DFS and find the first occurence only
+                string path = DFS.searchOne(selectedDir, textBox1.Text);
                 //MessageBox.Show(DFS.searchOne(selectedDir,textBox1.Text));
             }
             else
             {
-                //MessageBox.Show("Please choose any search algorithm option", "ErrorMessage");
+                MessageBox.Show("Please choose any search algorithm option", "ErrorMessage");
             }
 
             /* Currently failed switch case, find out more soon */
@@ -142,6 +152,7 @@ namespace FolderCrawling
             //    (false, true) => string a = "ac",
             //    (false, false) => string a = "ad",
             //};
+            Form1.viewer.Graph = graph;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -152,6 +163,25 @@ namespace FolderCrawling
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+
+        protected void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+            ////this.Controls.Add(viewer);
+            ////create the graph content 
+            //graph.AddEdge("A", "B");
+            //graph.AddEdge("B", "C");
+            //graph.AddEdge("A", "C").Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
+            ////bind the graph to the viewer 
+            //graph.AddEdge("C://", "files.txt");
+            viewer.Graph = graph;
+            //associate the viewer with the form 
+            viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            viewer.ToolBarIsVisible = false;
+            this.panel1.Controls.Add(viewer);
+            //show the form 
         }
     }
 }
