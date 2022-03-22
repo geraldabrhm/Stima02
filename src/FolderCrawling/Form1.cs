@@ -93,7 +93,45 @@ namespace FolderCrawling
             if (checkBox1.Checked && radioButton1.Checked)
             {
                 // Do BFS and find all occurences
-                touch = true;
+                BFS.waitingList.Clear();
+                string[] result = BFS.searchAll(selectedDir, textBox1.Text);
+                for (int i = 0; i < result.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        string pathWithFile = result[0] + "\\" + textBox1.Text;
+                        linkLabel1.Text = pathWithFile;
+                        linkLabel1.Visible = true;
+                        label11.Visible = true;
+                    }
+                    else if (i == 1)
+                    {
+                        string pathWithFile = result[1] + "\\" + textBox1.Text;
+                        linkLabel2.Text = pathWithFile;
+                        linkLabel2.Visible = true;
+                        label12.Visible = true;
+                    }
+                    else if (i == 2)
+                    {
+                        string pathWithFile = result[2] + "\\" + textBox1.Text;
+                        linkLabel3.Text = pathWithFile;
+                        linkLabel3.Visible = true;
+                        label13.Visible = true;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (result.Length != 0)
+                {
+                    label10.Visible = true;
+                    touch = true;
+                }
+                else
+                {
+                    MessageBox.Show("File Not Found", "Result");
+                }
             }
             else if (checkBox1.Checked && radioButton2.Checked)
             {
@@ -131,12 +169,29 @@ namespace FolderCrawling
                 {
                     label10.Visible = true;
                     touch = true;
+                } else
+                {
+                    MessageBox.Show("File Not Found", "Result");
                 }
             }
             else if (!checkBox1.Checked && radioButton1.Checked)
             {
                 // Do BFS and find the first occurence only
-                touch = true;
+                BFS.waitingList.Clear();
+                string result = BFS.searchOne(selectedDir, textBox1.Text);
+                if(result != "")
+                {
+                    string pathWithFile = result + "\\" + textBox1.Text;
+                    linkLabel1.Text = pathWithFile;
+                    linkLabel1.Visible = true;
+                    label10.Visible = true;
+                    label11.Visible = true;
+                    touch = true;
+                }
+                else
+                {
+                    MessageBox.Show("File Not Found", "Result");
+                }
             }
             else if (!checkBox1.Checked && radioButton2.Checked)
             {
