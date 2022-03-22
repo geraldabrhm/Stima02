@@ -95,6 +95,7 @@ namespace FolderCrawling
                 // Do BFS and find all occurences
                 BFS.waitingList.Clear();
                 string[] result = BFS.searchAll(selectedDir, textBox1.Text);
+
                 for (int i = 0; i < result.Length; i++)
                 {
                     if (i == 0)

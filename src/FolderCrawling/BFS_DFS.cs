@@ -117,7 +117,7 @@ namespace FolderCrawling
                 if (file == files[i].Split('\\').Last())
                 {
                     Form1.graph.FindNode(files[i].Split('\\').Last()).Attr.FillColor = Color.LightBlue; //beri warna biru pada node file
-                    path = files[i];
+                    path = selectedDir;
                     found = true;
                 }
                 i++;
