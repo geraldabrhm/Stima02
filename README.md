@@ -3,7 +3,7 @@
 Kelompok:
 
 1. Gerald Abraham Sianturi (NIM : 13520138)
-2. Azka Syauqy Irsyad (NIM : 13520107)
+2. Ikmal Alfaozi (NIM : 13520125)
 3. Shadiq Harwiz (NIM : 13520038)
 
 Repository ini dibuat dalam rangka memenuhi Tugas Besar 2 IF2211 Strategi Algoritma 2021/2022. Repository ini berisi aplikasi GUI sederhana yang memodelkan fitur dari file explorer pada sistem operasi, yang pada tugas ini disebut dengan Folder Crawling. Aplikasi ini memanfaatkan algoritma Breadth First Search (BFS) dan Depth First Search (DFS) untuk menelusuri folder-folder yang ada pada direktori untuk mendapatkan direktori yang Anda inginkan. Selain itu, aplikasi ini juga dapat memvisualisasikan hasil dari pencarian folder tersebut dalam bentuk pohon.
