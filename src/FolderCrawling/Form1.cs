@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Microsoft.Msagl.Drawing;
@@ -34,16 +28,6 @@ namespace FolderCrawling
                 MessageBox.Show("You have selected " + selectedDir);
                 label5.Text = selectedDir;
                 label5.ForeColor = System.Drawing.Color.Green;
-
-                /* Display the content */
-                //foreach (string dir in dirs)
-                //{
-                //    MessageBox.Show(dir);
-                //}
-                //foreach (string file in files)
-                //{
-                //    MessageBox.Show(file);
-                //}
             } else
             {
                 if (selectedDir == "")
