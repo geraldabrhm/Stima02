@@ -24,6 +24,6 @@ Berikut adalah langkah-langkahnya :
 
 ## How to Run
 1. Buka folder `bin`
-2. Klik salah satu diantara `folder crawling.exe` dan `folder crawling.msi`
+2. Klik salah satu diantara `Folder Crawling.exe` dan `Folder Crawling.msi`
 3. Lakukan proses instalasi hingga selesai
 4. Aplikasi dapat digunakan
