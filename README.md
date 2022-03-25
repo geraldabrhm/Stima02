@@ -1,4 +1,4 @@
-# Tugas Besar 1 IF2211 Strategi Algoritma
+# Tugas Besar 2 IF2211 Strategi Algoritma
 
 Kelompok:
 
