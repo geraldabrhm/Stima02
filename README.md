@@ -20,8 +20,6 @@ Berikut adalah langkah-langkahnya :
     - Pada kasus find all occurrences Semua folder ditelusuri, dan setiap file yang sesuai disimpan path-nya dalam sebuah list.
     - Pada kasus find first occurrence ketika file pertama ditemukan, pencarian dihentikan pada level tersebut.
 
-## Requirement
-
 ## How to Run
 1. Buka folder `bin`
 2. Klik salah satu diantara `Folder Crawling.exe` dan `Folder Crawling.msi`
