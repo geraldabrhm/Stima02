@@ -182,8 +182,7 @@ namespace FolderCrawling
                 string result = BFS.searchOne(selectedDir, textBox1.Text);
                 if(result != "")
                 {
-                    string pathWithFile = result + "\\" + textBox1.Text;
-                    linkLabel1.Text = pathWithFile;
+                    linkLabel1.Text = result;
                     linkLabel1.Visible = true;
                     label10.Visible = true;
                     label11.Visible = true;
